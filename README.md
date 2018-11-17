@@ -1,3 +1,3 @@
 # bbchatbot
 
-## Written by Dawood and Sam for NLP 2k18
+## Written by Dawood Nadurath and Sam Britton for NLP 2k18
