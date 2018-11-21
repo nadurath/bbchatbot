@@ -5,6 +5,7 @@ running = True
 introduced = False
 used_facts = {}
 context = ""
+memory = []
 
 '''
 There should also be a handful of current topics such as nouns, subjs, names
@@ -20,14 +21,13 @@ while running:
     #user_response askUser(bot_response)
     user_response = "hello bot"
 
-    subject, modifiers = parse.handleHumanResponse(user_response,context)
     # this should set the variables that are interpreted by generateBotResponse
+    subject, modifiers = parse.handleHumanResponse(user_response,context)
 
-    bot_response,context = responseGenerator.generate_response(subject,modifiers)
     #This will use the inputs and generate the statement to tell the user
+    bot_response,context = responseGenerator.generate_response(subject,modifiers,memory)
 
     #promptUser(bot_response)
-
 
     if True:
         running = False
