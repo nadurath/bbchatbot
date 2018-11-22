@@ -1,21 +1,27 @@
-from nltk.corpus import sentiwordnet
+import nltk
 
-subjects = ["albums","members","songs","beach boys","brian wilson","pet sounds","mike love","good vibrations","god only knows","al jardine","smiley smile","bruce johnston","carl wilson"]
+branches = ["albums","members","songs"]
+
+topics = ["beach boys","brian wilson","pet sounds","mike love","good vibrations","god only knows","al jardine","smiley smile","bruce johnston","carl wilson"]
 
 modifiers = ["statement","greeting","bot comment","answer","favorite","affirmative","negative"]
 
 # TODO everything
-def handleHumanResponse(text, context):
+def handleHumanResponse(text, memory):
+    text = text.lower()
 
-    human_response_subjects = []
-    human_response_modifiers = []
+    for x in branches:
+        if x in text:
+            memory["branches"] = x
 
-    if "expect answer" in context.lower():
-        human_response_modifiers.append("answer")
+    for x in topics:
+        if x in text:
+            memory["topics"] = x
 
-    # Basically we just need a bunch of if statements detecting things
+    for y in memory.keys():
+        print(y)
 
-    return human_response_subjects,human_response_modifiers
+    return memory
 
 ''' Convo flow example:
         Greeting - Hello, I'm the Beach Bot! What's your name? -> Name set 
