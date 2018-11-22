@@ -22,8 +22,9 @@ while running:
     bot_response,memory = responseGenerator.generate_response(memory)
 
     # TODO this needs to check context for goodbye
-    if True:
-        running = False
+    if memory.get("running"):
+        if memory["running"] is False:
+            running = False
 
     if not running:
         final = "bye "+memory["name"]+"!"
