@@ -38,7 +38,7 @@ def generateGoodbye(subject,modifiers,memory):
     return "Bye, {name}, thanks for talking!"
 
 
-def generate_response(subject, modifiers,memory,context):
+def generate_response(subject, modifiers,memory):
     facts = factsDictionary.get_facts()
 
     answer = "I'm not sure how to respond to that"

@@ -4,25 +4,27 @@ import responseGenerator
 running = True
 introduced = False
 used_facts = {}
-context = ""
-memory = []
+memory = {}
 
 while running:
     if not introduced:
-        user_response = input("HELLO I AM THE BEACH BOT\n:")
+        name = input("HELLO I AM THE BEACH BOT- WHAT IS YOUR NAME:\n")
+        memory["name"] = name
+        user_response = name
         introduced = True
     else:
         user_response = input(bot_response+"\n:")
 
     # this should set the variables that are interpreted by generateBotResponse
-    subject, modifiers = parse.handleHumanResponse(user_response,context)
+    subject, modifiers = parse.handleHumanResponse(user_response,"memory")
 
     #This will use the inputs and generate the statement to tell the user
-    bot_response,context = responseGenerator.generate_response(subject,modifiers,memory,context)
+    bot_response,context = responseGenerator.generate_response(subject,modifiers,memory)
 
     # TODO this needs to check context for goodbye
     if True:
         running = False
 
     if not running:
-        print("bye {user_name}!")
+        final = "bye "+memory["name"]+"!"
+        print(final)
