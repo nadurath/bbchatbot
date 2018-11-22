@@ -7,19 +7,12 @@ used_facts = {}
 context = ""
 memory = []
 
-'''
-There should also be a handful of current topics such as nouns, subjs, names
-These will be populated and changed by hHR() and used by gBR()
-
-'''
-
 while running:
     if not introduced:
-        print("AHHHHHH")
+        user_response = input("HELLO I AM THE BEACH BOT\n:")
         introduced = True
-
-    #user_response askUser(bot_response)
-    user_response = "hello bot"
+    else:
+        user_response = input(bot_response+"\n:")
 
     # this should set the variables that are interpreted by generateBotResponse
     subject, modifiers = parse.handleHumanResponse(user_response,context)
@@ -27,8 +20,7 @@ while running:
     #This will use the inputs and generate the statement to tell the user
     bot_response,context = responseGenerator.generate_response(subject,modifiers,memory)
 
-    #promptUser(bot_response)
-
+    # TODO this needs to check context for goodbye
     if True:
         running = False
 

@@ -18,5 +18,3 @@ def get_facts():
             dict[x[0]] = x[1:len(x)-1]
 
     return dict
-
-    
