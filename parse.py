@@ -23,7 +23,7 @@ def handleHumanResponse(text, memory):
     # Determines if the user is exiting or not.
     for x in farewell:
         if x in text:
-            memory["modifiers"] = x
+            memory["modifiers"] = "goodbye"
 
     # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
     # generate a greeting response.
