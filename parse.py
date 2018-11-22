@@ -1,22 +1,16 @@
-import nltk
-import os
-import re
-import numpy.random
 
-GREETING_KEYWORDS = ("hello", "hi", "greetings", "hey", "what's up", "sup")
+subjects = ["beach boys","Brian Wilson","Pet Sounds","Mike Love","Good Vibrations","God only knows","Al Jardine","smiley smile","bruce johnston","Carl Wilson","albums","members"]
 
-FACT_KEYWORDS = ('beach boys', 'brian wilson', 'pet sounds', 'mike love', 'good vibrations', 'god only knows', 'al jardine', 'smiley smile', 'bruce johnston', 'carl wilson')
+modifiers = ["question","statement","greeting","bot comment","answer","favorite"]
 
-GREETING_RESPONSES = ["'sup bro", "hey", "*nods*", "hey you get my snap?"]
+# TODO everything
+def handleHumanResponse(text, context):
+    human_response_subjects = []
+    human_response_modifiers = []
 
-def check_for_greeting(sentence):
-    """If any of the words in the user's input was a greeting, return a greeting response"""
-    for word in sentence.words:
-        if word.lower() in GREETING_KEYWORDS:
-            return numpy.random.choice(GREETING_RESPONSES)
+    if "expect answer" in context.lower():
+        human_response_modifiers.append("answer")
 
-def parseSentence(sentence):
-    text = nltk.word_tokenize(sentence)
-    print(nltk.pos_tag(text))
+    # Basically we just need a bunch of if statements detecting things
 
-print(parseSentence("Hello my name is Dawood"))
+    return human_response_subjects,human_response_modifiers
