@@ -4,17 +4,39 @@ topics = ["beach boys","brian wilson","pet sounds","mike love","good vibrations"
 
 modifiers = ["statement","greeting","bot comment","answer","favorite","affirmative","negative"]
 
+farewell = ["bye","goodbye","farewell", "see ya", "adios"]
+
 # TODO handle modifier sentiment
 def handleHumanResponse(text, memory):
     text = text.lower()
 
+    # Determines if user response is a request for a branch or not.
     for x in branches:
         if x in text:
             memory["branches"] = x
 
+    # Determines if user response is a request for a fact or not.
     for x in topics:
         if x in text:
             memory["topics"] = x
+
+    # Determines if the user is exiting or not.
+    for x in farewell:
+        if x in text:
+            memory["modifiers"] = x
+
+    # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
+    # generate a greeting response.
+    if memory["name"] is not "" and memory["branches"] is "" and memory["topics"] is "":
+        memory["modifiers"] = "greeting"
+
+    # If the branches key holds a value, it is determined that the bot should generate a fact response.
+    if memory["branches"] is not "" and memory["topics"] is "":
+        memory["modifiers"] = "topics"
+
+    # If the topics key holds a value, it is determined that the bot should generate a branch response.
+    if memory["branches"] is "" and memory["topics"] is not "":
+        memory["modifiers"] = "branches"
 
     return memory
 
