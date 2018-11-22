@@ -1,12 +1,10 @@
-import nltk
-
 branches = ["albums","members","songs"]
 
 topics = ["beach boys","brian wilson","pet sounds","mike love","good vibrations","god only knows","al jardine","smiley smile","bruce johnston","carl wilson"]
 
 modifiers = ["statement","greeting","bot comment","answer","favorite","affirmative","negative"]
 
-# TODO everything
+# TODO handle modifier sentiment
 def handleHumanResponse(text, memory):
     text = text.lower()
 
@@ -18,12 +16,10 @@ def handleHumanResponse(text, memory):
         if x in text:
             memory["topics"] = x
 
-    for y in memory.keys():
-        print(y)
-
     return memory
 
-''' Convo flow example:
+''' 
+    Convo flow example:
         Greeting - Hello, I'm the Beach Bot! What's your name? -> Name set 
         Branch - Hello {name}! Would you like to know about the Beach Boys' members, albums, or songs?) -> State set (xyz)
         State (albums, members, songs) - We can tell you about x1/x2/x3, who/what/which would you like to know more about? -> Pull from facts set
