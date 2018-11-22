@@ -16,10 +16,10 @@ while running:
         user_response = input(bot_response+"\n:")
 
     # this should set the variables that are interpreted by generateBotResponse
-    memory = parse.handleHumanResponse(memory)
+    # memory,nothing = parse.handleHumanResponse(user_response,"memory")
 
     #This will use the inputs and generate the statement to tell the user
-    bot_response,memory = responseGenerator.generate_response(modifiers, memory)
+    bot_response,memory = responseGenerator.generate_response(memory)
 
     # TODO this needs to check context for goodbye
     if True:
