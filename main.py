@@ -18,7 +18,7 @@ while running:
     subject, modifiers = parse.handleHumanResponse(user_response,context)
 
     #This will use the inputs and generate the statement to tell the user
-    bot_response,context = responseGenerator.generate_response(subject,modifiers,memory)
+    bot_response,context = responseGenerator.generate_response(subject,modifiers,memory,context)
 
     # TODO this needs to check context for goodbye
     if True:

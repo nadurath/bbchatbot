@@ -31,15 +31,14 @@ def generateResponseToAnswer(subject,modifiers,memory):
 
 
 def generateQuestion(subject,modifiers,memory):
-    return "which beach boy is your favorite?"
+    return "Would you like to know about members, albums, or songs of the Beach Boys?"
 
 
 def generateGoodbye(subject,modifiers,memory):
     return "Bye, {name}, thanks for talking!"
 
 
-def generate_response(subject, modifiers,memory):
-    # TODO make the facts have similar grammar structures
+def generate_response(subject, modifiers,memory,context):
     facts = factsDictionary.get_facts()
 
     answer = "I'm not sure how to respond to that"
