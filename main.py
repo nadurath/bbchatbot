@@ -16,16 +16,12 @@ while running:
         user_response = input(bot_response+"\n:")
 
     # this should set the variables that are interpreted by generateBotResponse
-    # memory,nothing = parse.handleHumanResponse(user_response,"memory")
+    memory = parse.handleHumanResponse(user_response,memory)
 
     #This will use the inputs and generate the statement to tell the user
     bot_response,memory = responseGenerator.generate_response(memory)
 
     # TODO this needs to check context for goodbye
-    if memory.get("running"):
-        if memory["running"] is False:
-            running = False
-
-    if not running:
-        final = "bye "+memory["name"]+"!"
-        print(final)
+    if memory.get("goodbye"):
+        running = False
+        print(bot_response)

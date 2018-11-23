@@ -7,36 +7,41 @@ modifiers = ["statement","greeting","bot comment","answer","favorite","affirmati
 farewell = ["bye","goodbye","farewell", "see ya", "adios"]
 
 # TODO handle modifier sentiment
+# This function uses the current state of the memory, and the text input by the human, to adjust memory so the responseGenerator can better respond to the human
 def handleHumanResponse(text, memory):
     text = text.lower()
+
+    #TODO use flags such as "asking topic" in memory to better adjust memory so rG can generate the correct responses
 
     # Determines if user response is a request for a branch or not.
     for x in branches:
         if x in text:
             memory["branches"] = x
 
+
     # Determines if user response is a request for a fact or not.
     for x in topics:
         if x in text:
             memory["topics"] = x
+
 
     # Determines if the user is exiting or not.
     for x in farewell:
         if x in text:
             memory["modifiers"] = x
 
-    # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
-    # generate a greeting response.
-    if memory["name"] is not "" and memory["branches"] is "" and memory["topics"] is "":
-        memory["modifiers"] = "greeting"
+    # if memory.get("asking more") and memory.get("asking more") is False:
 
-    # If the branches key holds a value, it is determined that the bot should generate a fact response.
-    if memory["branches"] is not "" and memory["topics"] is "":
-        memory["modifiers"] = "topics"
+    if "no" in text and memory.get("asking more") is True:
+        del(memory["topic"])
+        memory["asking more"] = False
 
-    # If the topics key holds a value, it is determined that the bot should generate a branch response.
-    if memory["branches"] is "" and memory["topics"] is not "":
-        memory["modifiers"] = "branches"
+    if "brian" in text: # This is for testing, bad code as it'd produce incorrect behavior if someone named brian used the bot
+        memory["branch"] = "members"
+        memory["topic"] = "brian wilson"
+
+    if "bye" in text:
+        memory["goodbye"] = True
 
     return memory
 
