@@ -4,7 +4,11 @@ topics = ["Beach Boys","Brian Wilson","Pet Sounds","Mike Love","Good Vibrations"
 
 modifiers = ["statement","greeting","bot comment","answer","favorite","affirmative","negative"]
 
-farewell = ["bye","goodbye","farewell", "see ya", "adios"]
+farewell = ["bye","goodbye","good-bye","farewell", "see ya", "adios"]
+
+negative = ["no","nope","nuh-uh","never","nah","don't","not","negative"]
+
+affirmative = ["yes","yeah","yep","sure","affirmative"]
 
 # TODO handle modifier sentiment
 # This function uses the current state of the memory, and the text input by the human, to adjust memory so the responseGenerator can better respond to the human
@@ -33,19 +37,16 @@ def handleHumanResponse(text, memory):
     # TODO add a case for detecting if the user said their name
 
     # TODO this is the primary shape that this class should take, with a lot more of tags that'll be basically written as their counterparts appear in rG
-    # TODO fix this block to accept more "no" phrases, and not just any sentence that contains the two consecutive letters
-    if "no" in text:
-        if memory.get("asking more") is True:
-            del(memory["topic"])
-            memory["asking more"] = False
-        elif True:
-            pass
+    if memory.get("asking more") is True:
+        for x in text:
+            if x in negative:
+                del(memory["topics"])
+            elif x in affirmative:
+                pass
+            else:
+                print("I'm not sure what you mean - was that a yes or a no?")
 
-    if "yes" in text:
-        # TODO fill this with cases for each instance we ask a yes/no question
-        pass
-
-
+    # TODO fill this with cases for each instance we ask a yes/no question
 
     # TODO remove this, eventually...
     # This is for testing, bad code as it'd produce incorrect behavior if someone named brian used the bot
