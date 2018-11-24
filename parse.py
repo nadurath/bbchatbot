@@ -1,6 +1,6 @@
 branches = ["albums","members","songs"]
 
-topics = ["beach boys","brian wilson","pet sounds","mike love","good vibrations","god only knows","al jardine","smiley smile","bruce johnston","carl wilson"]
+topics = ["Beach Boys","Brian Wilson","Pet Sounds","Mike Love","Good Vibrations","God Only Knows","Al Jardine","Smiley Smile","Bruce Johnston","Carl Wilson"]
 
 modifiers = ["statement","greeting","bot comment","answer","favorite","affirmative","negative"]
 
