@@ -10,21 +10,24 @@ def generateFact(memory):
             generated = memory["topic"] + " " + facts[memory["topic"]][index]
     return generated
 
+
 def generateContinue(memory):
     if memory.get("topic"):
         generated =  "Do you want to hear more about "+memory.get("topic")+"?"
     return generated
+
 
 def generateGoodbye(memory):
     if memory.get("name"):
         audios = "Bye, "+memory["name"]+", thanks for talking!"
         return audios
 
+
 def generateHello(memory):
     if memory.get("name"):
-        audios = "Hello, "+memory["name"]+", I'm the beach bot, would you like to know about the Beach boy's albums, songs, or members?"
-        memory["asking branch"] = True
-        return audios
+        message = "Hello, "+memory["name"]+", I'm the beach bot!"
+        return message
+
 
 # TODO use the current branch to select from available topic
 def generateTopicSelection(memory):
@@ -32,10 +35,19 @@ def generateTopicSelection(memory):
     if memory.get("branch") is "members":
         return "There have been a total of nine members of the beach boys\n" \
                "I know some facts on Brian Wilson, Mike Love, Al Jardine, Bruce Johnston, and Carl Wilson if you'd like to know about some boys"
+    elif memory.get("branch") is "albums":
+        return "The beach boys have released 29 albums!\n" \
+               "That's too many to list, but i could give you facts on Pet Sounds or Smiley Smile if you would like"
+    elif memory.get("branch") is "songs":
+        return "The beach boys have released dozens and dozens of songs!\n" \
+               "That's too many to list, but i could give you facts on Good Vibrations and God only Knows if you want"
+
 
 # TODO use this to select between branch
 def generateBranchSelection(memory):
-    pass
+    memory["asking branch"] = True
+    message = "would you like to know about the Beach boy's albums, songs, or members?"
+    return message
 
 
 def generate_response(memory):
@@ -48,6 +60,7 @@ def generate_response(memory):
     # generate a greeting response.
     elif memory.get("name") and not memory.get("branch") and not memory.get("topic"):
         answer = generateHello(memory)
+        answer += "\n"+generateBranchSelection(memory)
 
     # If the topic key does not hold a value, it is determined that the bot should generate a branch response.
     elif not memory.get("branch"):
