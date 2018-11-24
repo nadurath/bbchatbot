@@ -4,10 +4,12 @@ import factsDictionary
 
 def generateFact(memory):
     if memory.get("topic"):
+        key = memory.get("topic")
+        low_key = key.lower()
         facts = factsDictionary.get_facts()
-        if facts.get(memory.get("topic")):
-            index = random.randint(0, len(facts[memory["topic"]])-1)
-            generated = memory["topic"] + " " + facts[memory["topic"]][index]
+        if facts.get(low_key):
+            index = random.randint(0, len(facts[low_key])-1)
+            generated = key + " " + facts[low_key][index]
     return generated
 
 
@@ -29,24 +31,24 @@ def generateHello(memory):
         return message
 
 
-# TODO use the current branch to select from available topic
 def generateTopicSelection(memory):
     memory["asking topics"] = True
+    response = ""
     if memory.get("branch") is "members":
-        return "There have been a total of nine members of the beach boys\n" \
-               "I know some facts on Brian Wilson, Mike Love, Al Jardine, Bruce Johnston, and Carl Wilson if you'd like to know about some boys"
+        response += "There have been a total of nine members of the beach boys\n" \
+               "I know some facts on Brian Wilson, Mike Love, Al Jardine, Bruce Johnston, and Carl Wilson if you want to know about them,"
     elif memory.get("branch") is "albums":
-        return "The beach boys have released 29 albums!\n" \
-               "That's too many to list, but i could give you facts on Pet Sounds or Smiley Smile if you would like"
+        response += "The beach boys have released 29 albums!\n" \
+               "That's too many to list, but i could give you facts on Pet Sounds or Smiley Smile if you would like to know about those,"
     elif memory.get("branch") is "songs":
-        return "The beach boys have released dozens and dozens of songs!\n" \
-               "That's too many to list, but i could give you facts on Good Vibrations and God only Knows if you want"
+        response +="The beach boys have released dozens and dozens of songs!\n" \
+               "That's too many to list, but i could give you facts on Good Vibrations and God only Knows if you want to know about those,"
+    response +="\nor we can talk about another topic. So what do you want to know?"
+    return response
 
-
-# TODO use this to select between branch
 def generateBranchSelection(memory):
     memory["asking branch"] = True
-    message = "would you like to know about the Beach boy's albums, songs, or members?"
+    message = "would you like to know about the Beach boy's albums, songs, members, or the band itself?"
     return message
 
 
