@@ -1,4 +1,4 @@
-branches = ["albums","members","songs"]
+branches = ["albums","members","songs","band"]
 
 topics = ["Beach Boys","Brian Wilson","Pet Sounds","Mike Love","Good Vibrations","God Only Knows","Al Jardine","Smiley Smile","Bruce Johnston","Carl Wilson"]
 
@@ -38,15 +38,16 @@ def handleHumanResponse(text, memory):
 
     # TODO this is the primary shape that this class should take, with a lot more of tags that'll be basically written as their counterparts appear in rG
     if memory.get("asking more") is True:
-        for x in text:
+        for x in text.split():
             if x in negative:
-                del(memory["topics"])
+                del(memory["topic"])
             elif x in affirmative:
                 pass
-            else:
-                print("I'm not sure what you mean - was that a yes or a no?")
+        del(memory["asking more"])
+
 
     # TODO fill this with cases for each instance we ask a yes/no question
+
 
     # TODO remove this, eventually...
     # This is for testing, bad code as it'd produce incorrect behavior if someone named brian used the bot
