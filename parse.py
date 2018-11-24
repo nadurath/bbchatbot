@@ -28,20 +28,30 @@ def handleHumanResponse(text, memory):
     # Determines if the user is exiting or not.
     for x in farewell:
         if x in text:
-            memory["modifiers"] = x
+            memory["goodbye"] = True
 
-    # if memory.get("asking more") and memory.get("asking more") is False:
+    # TODO add a case for detecting if the user said their name
 
-    if "no" in text and memory.get("asking more") is True:
-        del(memory["topic"])
-        memory["asking more"] = False
+    # TODO this is the primary shape that this class should take, with a lot more of tags that'll be basically written as their counterparts appear in rG
+    # TODO fix this block to accept more "no" phrases, and not just any sentence that contains the two consecutive letters
+    if "no" in text:
+        if memory.get("asking more") is True:
+            del(memory["topic"])
+            memory["asking more"] = False
+        elif True:
+            pass
 
-    if "brian" in text: # This is for testing, bad code as it'd produce incorrect behavior if someone named brian used the bot
+    if "yes" in text:
+        # TODO fill this with cases for each instance we ask a yes/no question
+        pass
+
+
+
+    # TODO remove this, eventually...
+    # This is for testing, bad code as it'd produce incorrect behavior if someone named brian used the bot
+    if "brian" in text:
         memory["branch"] = "members"
         memory["topic"] = "brian wilson"
-
-    if "bye" in text:
-        memory["goodbye"] = True
 
     return memory
 

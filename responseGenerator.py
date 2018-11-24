@@ -44,7 +44,6 @@ def generate_response(memory):
     if memory.get("goodbye"):
         answer = generateGoodbye(memory)
 
-
     # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
     # generate a greeting response.
     elif memory.get("name") and not memory.get("branch") and not memory.get("topic"):
@@ -64,7 +63,7 @@ def generate_response(memory):
         answer += "\n"+generateContinue(memory)
         memory["asking more"] = True
 
-
+    # TODO add at least one elif statement that responds to a UNIQUE combination of variables that basically describes every state in the tree and its possible options
 
     if not answer:
         answer = "I'm not sure how to respond to that"

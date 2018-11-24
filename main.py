@@ -9,6 +9,7 @@ memory = {}
 while running:
     if not introduced:
         name = input("HELLO I AM THE BEACH BOT- WHAT IS YOUR NAME:\n")
+        # TODO move this logic into the parse class
         memory["name"] = name
         user_response = name
         introduced = True
@@ -21,7 +22,6 @@ while running:
     #This will use the inputs and generate the statement to tell the user
     bot_response,memory = responseGenerator.generate_response(memory)
 
-    # TODO this needs to check context for goodbye
     if memory.get("goodbye"):
         running = False
         print(bot_response)
