@@ -7,36 +7,51 @@ modifiers = ["statement","greeting","bot comment","answer","favorite","affirmati
 farewell = ["bye","goodbye","farewell", "see ya", "adios"]
 
 # TODO handle modifier sentiment
+# This function uses the current state of the memory, and the text input by the human, to adjust memory so the responseGenerator can better respond to the human
 def handleHumanResponse(text, memory):
     text = text.lower()
+
+    #TODO use flags such as "asking topic" in memory to better adjust memory so rG can generate the correct responses
 
     # Determines if user response is a request for a branch or not.
     for x in branches:
         if x in text:
             memory["branches"] = x
 
+
     # Determines if user response is a request for a fact or not.
     for x in topics:
         if x in text:
             memory["topics"] = x
 
+
     # Determines if the user is exiting or not.
     for x in farewell:
         if x in text:
-            memory["modifiers"] = "goodbye"
+            memory["goodbye"] = True
 
-    # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
-    # generate a greeting response.
-    if memory["name"] is not "" and memory["branches"] is "" and memory["topics"] is "":
-        memory["modifiers"] = "greeting"
+    # TODO add a case for detecting if the user said their name
 
-    # If the branches key holds a value, it is determined that the bot should generate a fact response.
-    if memory["branches"] is not "" and memory["topics"] is "":
-        memory["modifiers"] = "topics"
+    # TODO this is the primary shape that this class should take, with a lot more of tags that'll be basically written as their counterparts appear in rG
+    # TODO fix this block to accept more "no" phrases, and not just any sentence that contains the two consecutive letters
+    if "no" in text:
+        if memory.get("asking more") is True:
+            del(memory["topic"])
+            memory["asking more"] = False
+        elif True:
+            pass
 
-    # If the topics key holds a value, it is determined that the bot should generate a branch response.
-    if memory["branches"] is "" and memory["topics"] is not "":
-        memory["modifiers"] = "branches"
+    if "yes" in text:
+        # TODO fill this with cases for each instance we ask a yes/no question
+        pass
+
+
+
+    # TODO remove this, eventually...
+    # This is for testing, bad code as it'd produce incorrect behavior if someone named brian used the bot
+    if "brian" in text:
+        memory["branch"] = "members"
+        memory["topic"] = "brian wilson"
 
     return memory
 
