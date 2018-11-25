@@ -21,7 +21,7 @@ def generateFact(memory):
                 generated += "\nWould you like to know about any other " + memory.get("branch")+"?"
             else:
                 del (memory["branch"])
-                generated += "\nWould you like to know more about the Beach Boys' songs, members, or albums?"
+                generated += "\nI know about the Beach boy's albums, songs, and its members. Which would you like to know about?"
     return generated
 
 
@@ -36,7 +36,9 @@ def generateContinue(memory):
 def generateGoodbye(memory):
     if memory.get("name"):
         audios = "Bye, "+memory["name"]+", thanks for talking!"
-        return audios
+    else:
+        audios = "Bye, Beach Boys fan, thanks for talking!"
+    return audios
 
 
 def generateHello(memory):
@@ -62,7 +64,7 @@ def generateTopicSelection(memory):
 
 def generateBranchSelection(memory):
     memory["asking branch"] = True
-    message = "Would you like to know about the Beach boy's albums, songs, members, or the band itself?"
+    message = "I know about the Beach boy's albums, songs, members, and the band itself. Which would you like to know about?"
     return message
 
 
