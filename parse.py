@@ -15,20 +15,6 @@ affirmative = ["yes","yeah","yep","sure","affirmative"]
 def handleHumanResponse(text, memory):
     text = text.lower()
 
-    #TODO use flags such as "asking topic" in memory to better adjust memory so rG can generate the correct responses
-
-    # Determines if user response is a request for a branch or not.
-    for x in branches:
-        if x in text:
-            memory["branches"] = x
-
-
-    # Determines if user response is a request for a fact or not.
-    for x in topics:
-        if x in text:
-            memory["topics"] = x
-
-
     # Determines if the user is exiting or not.
     for x in farewell:
         if x in text:
@@ -37,6 +23,21 @@ def handleHumanResponse(text, memory):
     # TODO add a case for detecting if the user said their name
 
     # TODO this is the primary shape that this class should take, with a lot more of tags that'll be basically written as their counterparts appear in rG
+
+    if memory.get("asking branch") is True:
+        # Determines if user response is a request for a branch or not.
+        for x in branches:
+            if x in text:
+                memory["branches"] = x
+        del(memory["asking branch"])
+
+    if memory.get("asking topics") is True:
+        # Determines if user response is a request for a fact or not.
+        for x in topics:
+            if x in text:
+                memory["topics"] = x
+        del (memory["asking topics"])
+
     if memory.get("asking more") is True:
         for x in text.split():
             if x in negative:
@@ -51,9 +52,9 @@ def handleHumanResponse(text, memory):
 
     # TODO remove this, eventually...
     # This is for testing, bad code as it'd produce incorrect behavior if someone named brian used the bot
-    if "brian" in text:
-        memory["branch"] = "members"
-        memory["topic"] = "brian wilson"
+    #if "brian" in text:
+    #    memory["branch"] = "members"
+    #    memory["topic"] = "brian wilson"
 
     return memory
 
