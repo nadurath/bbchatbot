@@ -5,8 +5,6 @@ def get_facts():
     f = open('docs/facts.txt')
     text = f.read()
     text = text.lower()
-    text = text.replace('--', ' ')
-    text = re.sub(r"[,\/#!?$%\^&\*;:{}=\-\'_`~()\"]+", ' ', text)
     text = text.split('|')
     dict = {}
 
