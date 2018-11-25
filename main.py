@@ -1,11 +1,14 @@
 import parse
 import responseGenerator
+import factsDictionary
+
 
 
 running = True
 introduced = False
-used_facts = {}
 memory = {}
+memory["facts"] = facts = factsDictionary.get_facts()
+
 
 while running:
     if not introduced:
