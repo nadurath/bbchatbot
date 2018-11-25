@@ -1,5 +1,4 @@
 import random
-import factsDictionary
 
 #TODO remove facts we've already used
 def generateFact(memory):
@@ -9,10 +8,12 @@ def generateFact(memory):
         if key is "band":
             key = "The Beach Boys"
         low_key = key.lower()
-        facts = factsDictionary.get_facts()
+        facts = memory.get("facts")
+        # TODO fix empty case
         if facts.get(low_key):
             index = random.randint(0, len(facts[low_key])-1)
             generated = key + " " + facts[low_key][index]
+            del(facts[low_key][index])
     return generated
 
 
@@ -91,8 +92,6 @@ def generate_response(memory):
         answer = generateFact(memory)
         answer += "\n"+generateContinue(memory)
         memory["asking more"] = True
-
-    # TODO add at least one elif statement that responds to a UNIQUE combination of variables that basically describes every state in the tree and its possible options
 
     if not answer:
         answer = "I'm not sure how to respond to that"
