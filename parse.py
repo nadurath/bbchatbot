@@ -1,5 +1,4 @@
 import nltk
-from nltk.corpus import stopwords
 
 branches = ["albums","members","songs","band"]
 
@@ -16,13 +15,23 @@ affirmative = ["yes","yeah","yep","sure","affirmative"]
 # This function uses the current state of the memory, and the text input by the human, to adjust memory so the responseGenerator can better respond to the human
 
 def extractName(text):
-    sentToken = nltk.word_tokenize(text)
-    sentPos = nltk.pos_tag(sentToken)
-    print(sentPos)
+    text = text.lower()
     name = ""
-    for x in sentPos:
-        if x[1] == 'NNP':
-            name += (str(x[0]) + " ")
+    for x in text.split():
+        if "hi" in x:
+            text = text.replace("hi ","")
+        if "hello" in x:
+            text = text.replace("hello ","")
+        if "my" in x:
+            text = text.replace("my ","")
+        if "name" in x:
+            text = text.replace("name ","")
+        if "is" in x:
+            text = text.replace("is ","")
+    text = text.split()
+    for x in text:
+        x = x.capitalize()
+        name += x + " "
     name = name[:-1]
     return name
 
@@ -34,7 +43,6 @@ def handleHumanResponse(text, memory):
         if x in text:
             memory["goodbye"] = True
 
-    # TODO add a case for detecting if the user said their name
     # TODO only allow topics to be accessed while on their designated branch
 
     if memory.get("asking branch") is True:
