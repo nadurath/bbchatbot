@@ -5,6 +5,8 @@ import factsDictionary
 def generateFact(memory):
     if memory.get("topic"):
         key = memory.get("topic")
+        if key is "Band":
+            key = "The Beach Boys"
         low_key = key.lower()
         facts = factsDictionary.get_facts()
         if facts.get(low_key):
@@ -15,7 +17,8 @@ def generateFact(memory):
 
 def generateContinue(memory):
     if memory.get("topic"):
-        generated =  "Do you want to hear more about "+memory.get("topic")+"?"
+        generated = "Do you want to hear more about "+memory.get("topic")+"?"
+        memory["asking more"] = True
     return generated
 
 
@@ -39,16 +42,16 @@ def generateTopicSelection(memory):
                "I know some facts on Brian Wilson, Mike Love, Al Jardine, Bruce Johnston, and Carl Wilson if you want to know about them,"
     elif memory.get("branch") is "albums":
         response += "The beach boys have released 29 albums!\n" \
-               "That's too many to list, but i could give you facts on Pet Sounds or Smiley Smile if you would like to know about those,"
+               "That's too many to list, but I could give you facts on Pet Sounds or Smiley Smile if you would like to know about those,"
     elif memory.get("branch") is "songs":
-        response +="The beach boys have released dozens and dozens of songs!\n" \
-               "That's too many to list, but i could give you facts on Good Vibrations and God only Knows if you want to know about those,"
-    response +="\nor we can talk about another topic. So what do you want to know?"
+        response +="The beach boys have released HUNDREDS of songs!\n" \
+               "That's too many to list, but I could give you facts on Good Vibrations and God only Knows if you want to know about those,"
+    response +="\nor we can talk about another topic. So what do you want to do now?"
     return response
 
 def generateBranchSelection(memory):
     memory["asking branch"] = True
-    message = "would you like to know about the Beach boy's albums, songs, members, or the band itself?"
+    message = "Would you like to know about the Beach boy's albums, songs, members, or the band itself?"
     return message
 
 
@@ -58,6 +61,8 @@ def generate_response(memory):
     if memory.get("goodbye"):
         answer = generateGoodbye(memory)
 
+    if memory.get("asking more"):
+        answer = "I'm not sure what you mean - was that a yes or a no?"
     # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
     # generate a greeting response.
     elif memory.get("name") and not memory.get("branch") and not memory.get("topic"):
