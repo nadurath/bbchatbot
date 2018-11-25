@@ -36,23 +36,18 @@ def generateHello(memory):
 
 
 def generateTopicSelection(memory):
-    if memory.get("branch") is "band":
-        memory["topic"] = "band"
-        response = generateFact(memory)
-        response += "\n"+generateContinue(memory)
-    else:
-        memory["asking topics"] = True
-        response = ""
-        if memory.get("branch") is "members":
-            response += "There have been a total of nine members of the beach boys\n" \
-                   "I know some facts on Brian Wilson, Mike Love, Al Jardine, Bruce Johnston, and Carl Wilson if you want to know about them,"
-        elif memory.get("branch") is "albums":
-            response += "The beach boys have released 29 albums!\n" \
-                   "That's too many to list, but I could give you facts on Pet Sounds or Smiley Smile if you would like to know about those,"
-        elif memory.get("branch") is "songs":
-            response +="The beach boys have released HUNDREDS of songs!\n" \
-                   "That's too many to list, but I could give you facts on Good Vibrations and God only Knows if you want to know about those,"
-        response +="\nor we can talk about another topic. So what do you want to do now?"
+    memory["asking topics"] = True
+    response = ""
+    if memory.get("branch") is "members":
+        response += "There have been a total of nine members of the beach boys\n" \
+               "I know some facts on Brian Wilson, Mike Love, Al Jardine, Bruce Johnston, and Carl Wilson if you want to know about them,"
+    elif memory.get("branch") is "albums":
+        response += "The beach boys have released 29 albums!\n" \
+               "That's too many to list, but I could give you facts on Pet Sounds or Smiley Smile if you would like to know about those,"
+    elif memory.get("branch") is "songs":
+        response +="The beach boys have released HUNDREDS of songs!\n" \
+               "That's too many to list, but I could give you facts on Good Vibrations and God only Knows if you want to know about those,"
+    response +="\nor we can talk about another topic. So what do you want to do now?"
     return response
 
 def generateBranchSelection(memory):
@@ -62,13 +57,21 @@ def generateBranchSelection(memory):
 
 
 def generate_response(memory):
-
+    answer = ""
 
     if memory.get("goodbye"):
         answer = generateGoodbye(memory)
 
-    if memory.get("asking more"):
+    elif memory.get("asking more"):
         answer = "I'm not sure what you mean - was that a yes or a no?"
+
+    elif memory.get("branch") is "band":
+        memory["topic"] = "band"
+        answer = generateFact(memory)
+        answer += "\n" + generateContinue(memory)
+        del(memory["topic"])
+        memory["asking more"] = True
+
     # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
     # generate a greeting response.
     elif memory.get("name") and not memory.get("branch") and not memory.get("topic"):
