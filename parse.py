@@ -27,22 +27,25 @@ def handleHumanResponse(text, memory):
     if memory.get("asking branch") is True:
         # Determines if user response is a request for a branch or not.
         for x in branches:
-            if x in text:
-                memory["branches"] = x
+            lower = x.lower()
+            if lower in text:
+                memory["branch"] = x
         del(memory["asking branch"])
 
     elif memory.get("asking topics") is True:
         # Determines if user response is a request for a fact or not.
         for x in topics:
-            if x in text:
-                memory["topics"] = x
+            lower = x.lower()
+            if lower in text:
+                memory["topic"] = x
         del (memory["asking topics"])
 
     elif memory.get("asking more") is True:
         for x in text.split():
-            if x in negative:
+            lower = x.lower()
+            if lower in negative:
                 del(memory["topic"])
-            elif x in affirmative:
+            elif lower in affirmative:
                 pass
         del(memory["asking more"])
 
