@@ -9,14 +9,19 @@ def generateFact(memory):
             key = "The Beach Boys"
         low_key = key.lower()
         facts = memory.get("facts")
-        # TODO fix empty case
         if facts.get(low_key):
             index = random.randint(0, len(facts[low_key])-1)
             generated = key + " " + facts[low_key][index]
             del(facts[low_key][index])
+            generated += "\n"+generateContinue(memory)
         else:
-            memory["no more"] = True
-            generated = "That's all I know about " + key
+            generated = "Well, that's actually all I know about " + key
+            if not memory.get("branch") is "band":
+                del (memory["topic"])
+                generated += "\nWould you like to know about any other " + memory.get("branch")+"?"
+            else:
+                del (memory["branch"])
+                generated += "\nWould you like to know more about the Beach Boys' songs, members, or albums?"
     return generated
 
 
@@ -73,8 +78,8 @@ def generate_response(memory):
     elif memory.get("branch") is "band":
         memory["topic"] = "band"
         answer = generateFact(memory)
-        answer += "\n" + generateContinue(memory)
-        del(memory["topic"])
+        if memory.get("topic"):
+            del(memory["topic"])
         memory["asking more"] = True
 
     # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
@@ -94,12 +99,6 @@ def generate_response(memory):
 
     elif memory.get("branch") and memory.get("topic"):
         answer = generateFact(memory)
-        if not memory.get("no more"):
-            answer += "\n"+generateContinue(memory)
-            memory["asking more"] = True
-        else:
-            del(memory["topic"])
-            answer += "\nWhat else do you want to know about " + memory.get("branch")
 
     if not answer:
         answer = "I'm not sure how to respond to that"
