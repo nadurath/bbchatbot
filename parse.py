@@ -53,7 +53,7 @@ def handleHumanResponse(text, memory):
             if lower in text:
                 memory["topic"] = x
                 del (memory["asking topics"])
-            elif "other" in text or "another" in text or "something else" in text:
+            elif "other" in text or "another" in text or "else" in text:
                 del(memory["asking topics"])
                 del(memory["branch"])
                 break
