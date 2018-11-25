@@ -86,8 +86,11 @@ def generate_response(memory):
     # If the name key is the only one in the dictionary that holds a value, it is determined that the bot should
     # generate a greeting response.
     elif memory.get("name") and not memory.get("branch") and not memory.get("topic"):
-        answer = generateHello(memory)
-        answer += "\n"+generateBranchSelection(memory)
+        answer = ""
+        if not memory.get("helloed"):
+            answer += generateHello(memory)+"\n"
+            memory["helloed"] = True
+        answer += generateBranchSelection(memory)
 
     # If the topic key does not hold a value, it is determined that the bot should generate a branch response.
     elif not memory.get("branch"):
