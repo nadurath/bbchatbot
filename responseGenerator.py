@@ -14,10 +14,14 @@ def generateFact(memory):
             index = random.randint(0, len(facts[low_key])-1)
             generated = key + " " + facts[low_key][index]
             del(facts[low_key][index])
+        else:
+            memory["no more"] = True
+            generated = "That's all I know about " + key
     return generated
 
 
 def generateContinue(memory):
+    generated = ""
     if memory.get("topic"):
         generated = "Do you want to hear more about "+memory.get("topic")+"?"
         memory["asking more"] = True
@@ -90,8 +94,12 @@ def generate_response(memory):
 
     elif memory.get("branch") and memory.get("topic"):
         answer = generateFact(memory)
-        answer += "\n"+generateContinue(memory)
-        memory["asking more"] = True
+        if not memory.get("no more"):
+            answer += "\n"+generateContinue(memory)
+            memory["asking more"] = True
+        else:
+            del(memory["topic"])
+            answer += "\nWhat else do you want to know about " + memory.get("branch")
 
     if not answer:
         answer = "I'm not sure how to respond to that"
