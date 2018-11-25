@@ -6,7 +6,7 @@ def generateFact(memory):
     generated = ""
     if memory.get("topic"):
         key = memory.get("topic")
-        if key is "Band":
+        if key is "band":
             key = "The Beach Boys"
         low_key = key.lower()
         facts = factsDictionary.get_facts()
@@ -36,18 +36,23 @@ def generateHello(memory):
 
 
 def generateTopicSelection(memory):
-    memory["asking topics"] = True
-    response = ""
-    if memory.get("branch") is "members":
-        response += "There have been a total of nine members of the beach boys\n" \
-               "I know some facts on Brian Wilson, Mike Love, Al Jardine, Bruce Johnston, and Carl Wilson if you want to know about them,"
-    elif memory.get("branch") is "albums":
-        response += "The beach boys have released 29 albums!\n" \
-               "That's too many to list, but I could give you facts on Pet Sounds or Smiley Smile if you would like to know about those,"
-    elif memory.get("branch") is "songs":
-        response +="The beach boys have released HUNDREDS of songs!\n" \
-               "That's too many to list, but I could give you facts on Good Vibrations and God only Knows if you want to know about those,"
-    response +="\nor we can talk about another topic. So what do you want to do now?"
+    if memory.get("branch") is "band":
+        memory["topic"] = "band"
+        response = generateFact(memory)
+        response += "\n"+generateContinue(memory)
+    else:
+        memory["asking topics"] = True
+        response = ""
+        if memory.get("branch") is "members":
+            response += "There have been a total of nine members of the beach boys\n" \
+                   "I know some facts on Brian Wilson, Mike Love, Al Jardine, Bruce Johnston, and Carl Wilson if you want to know about them,"
+        elif memory.get("branch") is "albums":
+            response += "The beach boys have released 29 albums!\n" \
+                   "That's too many to list, but I could give you facts on Pet Sounds or Smiley Smile if you would like to know about those,"
+        elif memory.get("branch") is "songs":
+            response +="The beach boys have released HUNDREDS of songs!\n" \
+                   "That's too many to list, but I could give you facts on Good Vibrations and God only Knows if you want to know about those,"
+        response +="\nor we can talk about another topic. So what do you want to do now?"
     return response
 
 def generateBranchSelection(memory):
