@@ -1,8 +1,9 @@
 import random
 import factsDictionary
 
-
+#TODO remove facts we've already used
 def generateFact(memory):
+    generated = ""
     if memory.get("topic"):
         key = memory.get("topic")
         if key is "Band":
