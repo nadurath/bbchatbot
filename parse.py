@@ -1,3 +1,6 @@
+import nltk
+from nltk.corpus import stopwords
+
 branches = ["albums","members","songs","band"]
 
 topics = ["Beach Boys","Brian Wilson","Pet Sounds","Mike Love","Good Vibrations","God Only Knows","Al Jardine","Smiley Smile","Bruce Johnston","Carl Wilson"]
@@ -10,8 +13,19 @@ negative = ["no","nope","nuh-uh","never","nah","don't","not","negative"]
 
 affirmative = ["yes","yeah","yep","sure","affirmative"]
 
-# TODO handle modifier sentiment
 # This function uses the current state of the memory, and the text input by the human, to adjust memory so the responseGenerator can better respond to the human
+
+def extractName(text):
+    sentToken = nltk.word_tokenize(text)
+    sentPos = nltk.pos_tag(sentToken)
+    print(sentPos)
+    name = ""
+    for x in sentPos:
+        if x[1] == 'NNP':
+            name += (str(x[0]) + " ")
+    name = name[:-1]
+    return name
+
 def handleHumanResponse(text, memory):
     text = text.lower()
 
@@ -22,7 +36,6 @@ def handleHumanResponse(text, memory):
 
     # TODO add a case for detecting if the user said their name
     # TODO only allow topics to be accessed while on their designated branch
-    # TODO this is the primary shape that this class should take, with a lot more of tags that'll be basically written as their counterparts appear in rG
 
     if memory.get("asking branch") is True:
         # Determines if user response is a request for a branch or not.
@@ -55,16 +68,6 @@ def handleHumanResponse(text, memory):
             elif lower in affirmative:
                 pass
         del(memory["asking more"])
-
-
-    # TODO fill this with cases for each instance we ask a yes/no question
-
-
-    # TODO remove this, eventually...
-    # This is for testing, bad code as it'd produce incorrect behavior if someone named brian used the bot
-    #if "brian" in text:
-    #    memory["branch"] = "members"
-    #    memory["topic"] = "brian wilson"
 
     return memory
 
