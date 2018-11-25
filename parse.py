@@ -31,14 +31,14 @@ def handleHumanResponse(text, memory):
                 memory["branches"] = x
         del(memory["asking branch"])
 
-    if memory.get("asking topics") is True:
+    elif memory.get("asking topics") is True:
         # Determines if user response is a request for a fact or not.
         for x in topics:
             if x in text:
                 memory["topics"] = x
         del (memory["asking topics"])
 
-    if memory.get("asking more") is True:
+    elif memory.get("asking more") is True:
         for x in text.split():
             if x in negative:
                 del(memory["topic"])
