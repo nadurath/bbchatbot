@@ -1,6 +1,5 @@
 import random
 
-#TODO remove facts we've already used
 def generateFact(memory):
     generated = ""
     if memory.get("topic"):

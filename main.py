@@ -13,7 +13,6 @@ memory["facts"] = facts = factsDictionary.get_facts()
 while running:
     if not introduced:
         name = input("HELLO I AM THE BEACH BOT- WHAT IS YOUR NAME:\n")
-        # TODO move this logic into the parse class
         name = parse.extractName(name)
         memory["name"] = name
         user_response = name
