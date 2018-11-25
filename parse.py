@@ -21,7 +21,7 @@ def handleHumanResponse(text, memory):
             memory["goodbye"] = True
 
     # TODO add a case for detecting if the user said their name
-
+    # TODO only allow topics to be accessed while on their designated branch
     # TODO this is the primary shape that this class should take, with a lot more of tags that'll be basically written as their counterparts appear in rG
 
     if memory.get("asking branch") is True:
@@ -38,13 +38,20 @@ def handleHumanResponse(text, memory):
             lower = x.lower()
             if lower in text:
                 memory["topic"] = x
-        del (memory["asking topics"])
+                del (memory["asking topics"])
+            elif "other" in text or "another" in text or "something else" in text:
+                del(memory["asking topics"])
+                del(memory["branch"])
+                break
 
     elif memory.get("asking more") is True:
         for x in text.split():
             lower = x.lower()
             if lower in negative:
-                del(memory["topic"])
+                if not memory.get("topic"):
+                    del(memory["branch"])
+                else:
+                    del(memory["topic"])
             elif lower in affirmative:
                 pass
         del(memory["asking more"])
