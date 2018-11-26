@@ -2,6 +2,11 @@
 
 ## Written by Dawood Nadurath and Sam Britton for NLP 2018
 
+### how to run:
+
+Simply run "python main.py" from a directory that contains all the python files, and contains a directory named "docs" that has the selection of facts in a file named "facts.txt"
+
+
     Convo flow example:  
     - Greeting - Hello, I'm the Beach Bot! What's your name? -> Name set 
     - Branch - Hello {name}! Would you like to know about the Beach Boys' members, albums, or songs?) -> State set (xyz)
